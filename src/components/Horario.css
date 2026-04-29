@@ -106,6 +106,18 @@
   100% { filter: brightness(1); }
 }
 
+/* Block title row with alarm icon */
+.block-title-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.block-alarm-icon {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
 /* Current Time Line */
 .current-time-line {
   position: absolute;
@@ -161,12 +173,14 @@
 .modal-content {
   background-color: var(--bg-sidebar);
   width: 100%;
-  max-width: 450px;
+  max-width: 480px;
   border-radius: var(--radius-lg);
   padding: 24px;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
   animation: slideUp 0.3s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-header {
@@ -318,4 +332,260 @@
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   ALARM CONFIGURATION SECTION
+   ======================================== */
+
+.alarm-config-section {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.03) 0%,
+    rgba(129, 140, 248, 0.05) 100%
+  );
+  transition: all 0.3s ease;
+}
+
+.alarm-config-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.alarm-config-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alarm-config-icon {
+  color: var(--accent-color);
+}
+
+.alarm-config-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(100, 116, 139, 0.3);
+  border-radius: 24px;
+  transition: all 0.3s ease;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+.toggle-switch input:disabled + .toggle-slider {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Alarm Warning */
+.alarm-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 10px;
+  font-size: 12px;
+  color: #d97706;
+  line-height: 1.4;
+}
+
+[data-theme='dark'] .alarm-warning {
+  background: rgba(245, 158, 11, 0.06);
+  border-color: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.alarm-warning svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Alarm Config Body */
+.alarm-config-body {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+  animation: alarmBodySlideIn 0.3s ease-out;
+}
+
+@keyframes alarmBodySlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Minutes selector buttons */
+.alarm-minutes-selector {
+  display: flex;
+  gap: 8px;
+}
+
+.alarm-min-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-color);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.alarm-min-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.alarm-min-btn.active {
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+/* Sound upload row */
+.alarm-sound-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.alarm-upload-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px dashed var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-color);
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.alarm-upload-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  border-style: solid;
+}
+
+.alarm-preview-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-color);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.alarm-preview-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.alarm-preview-btn.playing {
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  border-color: transparent;
+  color: white;
+  animation: previewPulse 1s ease-in-out infinite;
+}
+
+@keyframes previewPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(99, 102, 241, 0); }
+}
+
+.alarm-clear-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.05);
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.alarm-clear-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.alarm-sound-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.7;
+  margin-top: 2px;
 }
